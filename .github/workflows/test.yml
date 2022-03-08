@@ -20,4 +20,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-      - run: node lib/src/index.js
+      - run: node lib/src/index.js > output.log
+      - uses: actions/upload-artifact@v3
+        with:
+          name: output-log-file
+          path: output.log
