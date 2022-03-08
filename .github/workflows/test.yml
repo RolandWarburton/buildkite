@@ -24,13 +24,13 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: output-log-file
-          path: output.log
+          path: output
   cat-log-file:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: output-log-file
-          path: output.log
+          path: .
       - run: cat output.log
 
