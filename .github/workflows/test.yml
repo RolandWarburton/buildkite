@@ -24,6 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: output.log
+          path: output
   cat-log-file:
     runs-on: ubuntu-20.04
     needs: [run-js-action]
@@ -31,5 +32,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: output.log
+          path: output
       - run: cat output.log
 
