@@ -17,5 +17,7 @@ The command needs to be indented directly 1 level out from the `run` command.
 You can do multiple commands like this.
 
 ```yaml
-
+run: |
+  ls ${{ github.workspace }} && \
+  echo "DONE"
 ```
