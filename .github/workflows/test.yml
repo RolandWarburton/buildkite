@@ -13,3 +13,9 @@ jobs:
           ls ${{ github.workspace }} && \
           echo "DONE"
       - run: echo "This job's status is ${{ job.status }}."
+    run-js-action:
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+        - run: node app/src/index.js

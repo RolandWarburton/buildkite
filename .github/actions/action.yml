@@ -9,4 +9,4 @@ inputs:
 
 runs:
   using: 'node16'
-  main: 'app/dist/index.js'
+  main: 'app/src/index.js'
