@@ -52,6 +52,7 @@ name: Test
 on: ['push']
 
 jobs:
+  # i recycled the node job above
   run-js-action:
     runs-on: ubuntu-20.04
     steps:
@@ -59,6 +60,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
+        # here i tee the output to a log file, then call the upload-artifact action
       - run: node lib/src/index.js | tee output.log
       - uses: actions/upload-artifact@v3
         with:
