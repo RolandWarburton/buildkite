@@ -25,12 +25,12 @@ jobs:
         with:
           name: output-log-file
           path: output.log
-    cat-log-file:
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/download-artifact@v3
-          with:
-            name: output-log-file
-            path: output.log
-        - run: cat output.log
+  cat-log-file:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: output-log-file
+          path: output.log
+      - run: cat output.log
 
