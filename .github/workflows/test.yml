@@ -32,6 +32,5 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: output.log
-          path: output
       - run: cat output.log
 
