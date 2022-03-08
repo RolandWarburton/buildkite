@@ -23,14 +23,13 @@ jobs:
       - run: node lib/src/index.js | tee output.log
       - uses: actions/upload-artifact@v3
         with:
-          name: output-log-file
-          path: output
+          name: output.log
   cat-log-file:
     runs-on: ubuntu-20.04
     needs: [run-js-action]
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: output-log-file
+          name: output.log
       - run: cat output.log
 
