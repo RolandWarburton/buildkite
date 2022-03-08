@@ -27,9 +27,9 @@ jobs:
           path: output
   cat-log-file:
     runs-on: ubuntu-20.04
+    needs: run-js-action
     steps:
       - uses: actions/download-artifact@v3
-        needs: ['run-js-action']
         with:
           name: output-log-file
           path: .
