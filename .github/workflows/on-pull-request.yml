@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: 16
       - name: Install and run test
-        working-directory: /lib
+        working-directory: ./lib
         run: |
           npm install
           npm run test
