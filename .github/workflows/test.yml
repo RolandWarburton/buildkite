@@ -1,0 +1,36 @@
+name: Test
+
+on: ['push']
+
+jobs:
+  test-action:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }} && \
+          echo "DONE"
+      - run: echo "This job's status is ${{ job.status }}."
+  run-js-action:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: node lib/src/index.js | tee output.log
+      - uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output.log
+  cat-log-file:
+    runs-on: ubuntu-20.04
+    needs: [run-js-action]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: output
+      - run: cat output.log
+
