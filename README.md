@@ -68,6 +68,8 @@ jobs:
           path: output.log
 ```
 
+## Downloading and Using Artifacts
+
 ```yaml
 name: Test
 
@@ -97,4 +99,60 @@ jobs:
         with:
           name: output
       - run: cat output.log
+```
+
+## Branch Protection
+
+This allows a branch, such as master, to be protected through a PR-only merge policy,
+as well as github actions to enable a branch to be in a passing state.
+
+To enable branch protection - on the github website repo, go to settings, branches, then add a new branch rule.
+
+My chosen settings were
+
+* Require a pull request before merging
+* Require status checks to pass before merging 
+  * Require branches to be up to date before merging
+  * Under the search box for "status checks" search for the name of a job in your workflows
+
+I created a new workflow called `.github/workflows/on-pull-request.yaml` and added the following to it.
+
+```yml
+name: on-pull-request
+
+on: ['pull_request', 'push']
+
+jobs:
+  run-test-action:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      # seperates this step for github actions (github displays this nicely in UI)
+      - name: Install and run test
+        working-directory: ./lib
+        run: |
+          npm install
+          npm run test
+```
+
+Of course your repo needs to have the test script in package.json for this to work, and a relevant test suite.
+
+Right now my test passes, you can choose to enable the failing test and observe how a PR will be refused when the test fails.
+
+```js
+// the foo function just returns the string 'foo'
+import { foo } from '../foo';
+
+describe('test suite', () => {
+  it('test case', () => {
+    expect(foo()).toBe('foo');
+  });
+
+  it.skip('test case that fails', () => {
+    expect(foo()).toBe('bar');
+  });
+});
 ```
