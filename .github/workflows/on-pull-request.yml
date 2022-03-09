@@ -3,7 +3,7 @@ name: on-pull-request
 on: ['pull_request', 'push']
 
 jobs:
-  run-js-action:
+  run-test-action:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
