@@ -66,5 +66,35 @@ jobs:
         with:
           name: output-log-file
           path: output.log
+```
 
+```yaml
+name: Test
+
+on: ['push']
+
+jobs:
+  run-js-action:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: node lib/src/index.js | tee output.log
+        #  upload the log file  with the name "output" we use this name to refer to it later
+      - uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output.log
+  cat-log-file:
+    runs-on: ubuntu-20.04
+    # we can use "needs" to wait depend on another job
+    needs: [run-js-action]
+    steps:
+        # download the log file using its special name that we gave it above
+      - uses: actions/download-artifact@v3
+        with:
+          name: output
+      - run: cat output.log
 ```
